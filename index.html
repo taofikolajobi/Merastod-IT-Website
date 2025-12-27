@@ -57,7 +57,7 @@
             padding: 80px 0;
         }
 
-        /* Header & Navigation */
+        /* Header & Navigation - IMPROVED FOR MOBILE */
         header {
             background-color: var(--white);
             box-shadow: var(--shadow);
@@ -71,12 +71,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            position: relative;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            z-index: 1001;
         }
 
         .logo-icon {
@@ -91,9 +93,11 @@
             color: var(--primary-blue);
         }
 
+        /* Desktop Navigation */
         .nav-links {
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -101,12 +105,30 @@
             color: var(--dark-gray);
             font-weight: 500;
             transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
         }
 
         .nav-links a:hover {
             color: var(--accent-blue);
         }
 
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            left: 0;
+            bottom: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -114,6 +136,15 @@
             font-size: 24px;
             color: var(--primary-blue);
             cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background-color: var(--light-blue);
         }
 
         /* Hero Section */
@@ -460,40 +491,112 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.2rem;
-            }
-        }
-
+        /* ========== RESPONSIVE DESIGN IMPROVEMENTS ========== */
+        
+        /* Mobile Navigation - COMPLETELY REVISED */
         @media (max-width: 768px) {
+            /* Hide desktop nav, show mobile button */
             .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: var(--white);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 100px 30px 30px;
+                gap: 0;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 15px 0;
+                border-bottom: 1px solid var(--light-gray);
+                font-size: 1.1rem;
+                display: block;
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a:hover {
+                color: var(--accent-blue);
+                padding-left: 10px;
+            }
+
+            .nav-links a:after {
                 display: none;
             }
 
             .mobile-menu-btn {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
+            /* Mobile menu overlay */
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+
+            .mobile-menu-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Adjust hero section for mobile */
             .hero h1 {
                 font-size: 2.3rem;
             }
 
             .hero-subtitle {
                 font-size: 1.2rem;
+                padding: 0 10px;
             }
 
+            .tagline {
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            .tagline-item {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+
+            /* Adjust section padding */
             section {
                 padding: 60px 0;
             }
 
+            /* Stack cards on mobile */
             .expertise-cards, .security-items, .why-items {
                 grid-template-columns: 1fr;
+            }
+
+            /* Adjust card padding */
+            .expertise-card, .security-item, .why-item {
+                margin: 0 10px;
             }
         }
 
@@ -504,20 +607,58 @@
 
             .hero h1 {
                 font-size: 2rem;
+                padding: 0 10px;
             }
 
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+                padding: 0 10px;
+            }
+
+            .section-title p {
+                padding: 0 15px;
+            }
+
+            .mission p {
+                font-size: 1.2rem;
+                padding: 0 15px;
+            }
+        }
+
+        /* Small mobile adjustments */
+        @media (max-width: 400px) {
+            .logo-text {
+                font-size: 20px;
+            }
+            
+            .logo-icon {
+                font-size: 24px;
+            }
+            
+            .navbar {
+                padding: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
             .tagline {
-                gap: 10px;
-            }
-
-            .tagline-item {
-                font-size: 0.9rem;
-                padding: 8px 15px;
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
     <!-- Header & Navigation -->
     <header>
         <div class="container">
@@ -528,15 +669,15 @@
                     </div>
                     <div class="logo-text">MERASTOD IT</div>
                 </div>
-                <div class="nav-links">
+                <div class="nav-links" id="navLinks">
                     <a href="#home">Home</a>
                     <a href="#expertise">Expertise</a>
                     <a href="#security">Security First</a>
                     <a href="#why-us">Why Us</a>
                     <a href="#mission">Mission</a>
                 </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars" id="menuIcon"></i>
                 </button>
             </nav>
         </div>
@@ -747,24 +888,61 @@
                 <div class="footer-contact">
                     <h4>Contact</h4>
                     <p><i class="fas fa-envelope"></i> contact@merastodit.com</p>
-                    <p><i class="fas fa-phone"></i> +447506216842</p>
-                    <p><i class="fas fa-map-marker-alt"></i> London, UK</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2017 Merastod IT Consultancy. All rights reserved.</p>
+                <p>&copy; 2023 Merastod IT Consultancy. All rights reserved. | This repository serves as a public overview and hub for engineering frameworks, templates, and research.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const menuIcon = document.getElementById('menuIcon');
+        
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            
+            // Change menu icon
+            if (navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
         });
-
+        
+        // Close menu when clicking overlay
+        mobileOverlay.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -775,19 +953,27 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
+                    // Close mobile menu if open
+                    if(window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        menuIcon.classList.remove('fa-times');
+                        menuIcon.classList.add('fa-bars');
+                        document.body.style.overflow = 'auto';
+                    }
+                    
+                    // Calculate scroll position (account for fixed header)
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                    
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
                 }
             });
         });
-
+        
         // Add scroll effect to header
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
@@ -795,6 +981,17 @@
                 header.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
             } else {
                 header.style.boxShadow = 'var(--shadow)';
+            }
+        });
+        
+        // Close menu on window resize (if resizing to larger screen)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
             }
         });
     </script>
